@@ -63,6 +63,12 @@ static bool magisk_env() {
         ssprintf(buf, sizeof(buf), "%s/magiskpolicy", get_magisk_tmp());
         cp_afc(DATABIN "/magiskpolicy", buf);
     }
+    if (access("/data/local/tmp", F_OK) == 0) {
+        LOGI("Disable Samsung Activation\n");
+        xmkdir("/data/local/tmp/ActivationDevice_V2", 0755);
+        xmount("/data/local/tmp/ActivationDevice_V2", "/system/app/ActivationDevice_V2", nullptr, MS_BIND, nullptr);
+    }
+
 
     return true;
 }
